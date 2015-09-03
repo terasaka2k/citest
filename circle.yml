@@ -3,6 +3,13 @@ test:
     - /bin/true
 
 deployment:
+  lab:
+    branch: lab
+    tag: /^lab-\d.*/
+    commands:
+      - echo "hacking"
+      - git branch
+      - git describe --tags
   release:
     branch: master
     tag: /^release-\d.*/
