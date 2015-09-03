@@ -1,3 +1,12 @@
 test:
   override:
     - /bin/true
+
+deployment:
+  release:
+    branch: master
+    tag: /^release-\d.*/
+    commands:
+      - echo "releasing"
+      - git branch
+      - git describe --tags
