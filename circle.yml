@@ -10,3 +10,4 @@ deployment:
       - echo "releasing"
       - git branch
       - git describe --tags
+      - /bin/true
