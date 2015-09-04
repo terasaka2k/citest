@@ -8,6 +8,9 @@ deployment:
     tag: /^lab-\d.*/
     commands:
       - echo "hacking"
+      - >-
+        print hi
+        by
       - git branch
       - git describe --tags
 
