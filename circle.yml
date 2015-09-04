@@ -20,4 +20,4 @@ deployment:
       - echo "releasing"
       - git branch
       - git describe --tags
-      - [[ 1 ]]
+      - python --version
