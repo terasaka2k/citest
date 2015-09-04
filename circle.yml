@@ -10,7 +10,7 @@ deployment:
       - echo "hacking"
       - git branch
       - git describe --tags
-      - [ -f circle.yml ]
+      - test -f circle.yml
 
       - python --version
 
