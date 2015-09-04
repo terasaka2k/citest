@@ -5,6 +5,7 @@ test:
 deployment:
 
   lab:
+    branch: lab
     tag: /^lab-\d.*/
     commands:
       - echo "hacking"
