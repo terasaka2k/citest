@@ -4,8 +4,14 @@ test:
 
 deployment:
   lab:
-    branch: lab
+    tag: /^lab-\d.*/
     commands:
       - echo "hacking"
+      - git branch
+      - git describe --tags
+  release:
+    tag: /^release-\d.*/
+    commands:
+      - echo "releasing"
       - git branch
       - git describe --tags
