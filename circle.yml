@@ -30,7 +30,7 @@ test:
   override:
     - ls
     - >-
-      if [[ -f "$MYCACHE" ]]; then
+      if [[ -d "$MYCACHE" ]]; then
         ls "$MYCACHE"
       fi
     - /bin/true
