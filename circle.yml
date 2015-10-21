@@ -16,7 +16,7 @@ dependencies:
       fi
   override:
     - >-
-      set -e
+      set -e;
       if [[ -f SKIP_DEPS ]]; then
         echo "Copying dependencies from cache"
         false
