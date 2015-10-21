@@ -1,6 +1,6 @@
 machine:
   environment:
-    HAS_NO_DIFF: 0
+    HAS_NO_DIFF: 1
     MYCACHE: mycache
 dependencies:
   cache_directories:
@@ -29,6 +29,10 @@ dependencies:
 test:
   override:
     - ls
+    - >-
+      if [[ -f "$MYCACHE" ]]; then
+        ls "$MYCACHE"
+      fi
     - /bin/true
 
 deployment:
