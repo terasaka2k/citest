@@ -1,8 +1,11 @@
+machine:
+  environment:
+    HAS_NO_DIFF: 0
 dependencies:
   cache_directories:
     - mycache
   pre:
-    - test -d mycache && true && touch SKIP_DEPS
+    - test -d mycache && [ $HAS_NO_DIFF == 1 ] && touch SKIP_DEPS
 
     - test -f SKIP_DEPS || touch INST_DEPS
 
