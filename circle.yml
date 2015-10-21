@@ -2,7 +2,8 @@ dependencies:
   cache_directories:
     - mycache
   pre:
-    - touch SKIP_DEPS
+    - test -d mycache && true && touch SKIP_DEPS
+
     - test -f SKIP_DEPS || touch INST_DEPS
 
     - >-
