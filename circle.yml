@@ -1,12 +1,11 @@
 machine:
   environment:
     HAS_NO_DIFF: 1
-    MYCACHE: $HOME/mycache
+    MYCACHE: "$HOME/mycache"
 dependencies:
   cache_directories:
-    - mycache
+    - ~/mycache
   pre:
-    - echo $SHELL
     - mkdir "$MYCACHE"
     - rm -f SKIP_DEPS
     - test -d mycache && [ $HAS_NO_DIFF == 1 ] && touch SKIP_DEPS || echo "Has diff"
