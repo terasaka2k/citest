@@ -11,7 +11,6 @@ deployment:
       - echo $CI_PULL_REQUESTS
       - echo $CIRCLE_PREVIOUS_BUILD_NUM
       - curl https://circleci.com/api/v1/me
-
   release:
     branch: master
     tag: /^release-\d.*/
