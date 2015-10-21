@@ -3,13 +3,19 @@ test:
     - /bin/true
 
 deployment:
-
   lab:
-    tag: /^lab-\d.*/
+    branch: lab
     commands:
-      - echo "hacking"
+      - echo $CIRCLE_BRANCH
+      - echo $CIRCLE_SHA1
+      - echo $CI_PULL_REQUESTS
+      - echo $CIRCLE_PREVIOUS_BUILD_NUM
+      - curl https://circleci.com/api/v1/me
+
+  release:
+    branch: master
+    tag: /^release-\d.*/
+    commands:
+      - echo "releasing"
       - git branch
       - git describe --tags
-      - test -f circle.yml
-
-      - python --version
