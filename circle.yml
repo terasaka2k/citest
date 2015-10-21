@@ -1,7 +1,7 @@
 machine:
   environment:
     HAS_NO_DIFF: 1
-    MYCACHE: "\$HOME/mycache"
+    MYCACHE: "$PWD/mycache"
 dependencies:
   cache_directories:
     - ~/mycache
