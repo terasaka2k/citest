@@ -1,29 +1,30 @@
 machine:
   environment:
     HAS_NO_DIFF: 0
+    MYCACHE: mycache
 dependencies:
   cache_directories:
     - mycache
   pre:
     - test -d mycache && [ $HAS_NO_DIFF == 1 ] && touch SKIP_DEPS || echo "Has diff"
 
-    - test -f SKIP_DEPS || touch INST_DEPS
-
     - >-
-      test -f SKIP_DEPS
-      || echo "Removing dependencies cache"
-      && rm -rf mycache && mkdir mycache
+      if [[ ! -f SKIP_DEPS ]]; then
+        echo "Removing dependencies cache"
+        rm -rf "$MYCACHE" && mkdir "$MYCACHE"
+      fi
   override:
     - >-
-      test -f INST_DEPS
-      || echo "Skipping dependencies installation"
-      && echo "Copying dependencies"
-      && cp -ra mycache/node_modules .
-    - >-
-      test -f SKIP_DEPS
-      || echo "Installing dependencies"
-      && npm i xtend
-      && cp -ra node_modules mycache/
+      if [[ -f SKIP_DEPS ]]; then
+        echo "Copying dependencies from cache"
+        cp -ra "$MYCACHE"/node_modules .
+      else
+        echo "Installing dependencies"
+        npm i xtend
+
+        echo "Storing dependencies as cache"
+        cp -ra node_modules "$MYCACHE"/node_modules
+      fi
 
 test:
   override:
