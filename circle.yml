@@ -14,7 +14,7 @@ dependencies:
     - >-
       test -f INST_DEPS
       || echo "Skipping dependencies installation"
-      && ehco "Copying dependencies"
+      && echo "Copying dependencies"
       && cp -ra mycache/node_modules .
     - >-
       test -f SKIP_DEPS
