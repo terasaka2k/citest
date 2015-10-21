@@ -6,10 +6,12 @@ dependencies:
   cache_directories:
     - mycache
   pre:
+    - echo $SHELL
     - rm -f SKIP_DEPS
     - test -d mycache && [ $HAS_NO_DIFF == 1 ] && touch SKIP_DEPS || echo "Has diff"
 
     - >-
+      set -e;
       if [[ ! -f SKIP_DEPS ]]; then
         echo "Removing dependencies cache"
         rm -rf "$MYCACHE" && mkdir "$MYCACHE"
@@ -19,7 +21,6 @@ dependencies:
       set -e;
       if [[ -f SKIP_DEPS ]]; then
         echo "Copying dependencies from cache"
-        false
         cp -ra "$MYCACHE"/node_modules .
       else
         echo "Installing dependencies"
@@ -33,6 +34,7 @@ test:
   override:
     - ls
     - >-
+      set -e;
       if [[ -d "$MYCACHE" ]]; then
         ls "$MYCACHE"
       fi
