@@ -16,7 +16,8 @@ dependencies:
 
 test:
   override:
-    - ls
+    - cat dep1
+    - cat dep2
 
 deployment:
   lab:
