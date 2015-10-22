@@ -3,15 +3,16 @@ dependencies:
     - ? >-
         set -e;
         if [[ $((0 % $CIRCLE_NODE_TOTAL)) == $CIRCLE_NODE_INDEX ]]; then
+          echo $CIRCLE_NODE_INDEX
           echo "Fake install dep1" > dep1
         fi;
-      : parallel: true
-    - ? >-
-        set -e;
         if [[ $((1 % $CIRCLE_NODE_TOTAL)) == $CIRCLE_NODE_INDEX ]]; then
+          echo $CIRCLE_NODE_INDEX
           echo "Fake install dep2" > dep2
         fi;
       : parallel: true
+
+    - ls
 
 test:
   override:
