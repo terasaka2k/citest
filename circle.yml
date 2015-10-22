@@ -1,44 +1,21 @@
-machine:
-  environment:
-    HAS_NO_DIFF: 1
-    MYCACHE: "$PWD/mycache"
 dependencies:
-  cache_directories:
-    - ~/mycache
-  pre:
-    - mkdir "$MYCACHE"
-    - rm -f SKIP_DEPS
-    - test -d mycache && [ $HAS_NO_DIFF == 1 ] && touch SKIP_DEPS || echo "Has diff"
-
-    - >-
-      set -e;
-      if [[ ! -f SKIP_DEPS ]]; then
-        echo "Removing dependencies cache"
-        rm -rf "$MYCACHE" && mkdir "$MYCACHE"
-      fi
   override:
-    - >-
-      set -e;
-      if [[ -f SKIP_DEPS ]]; then
-        echo "Copying dependencies from cache"
-        cp -ra "$MYCACHE"/node_modules .
-      else
-        echo "Installing dependencies"
-        npm i xtend
-
-        echo "Storing dependencies as cache"
-        cp -ra node_modules "$MYCACHE"/node_modules
-      fi
+    - ? >-
+        set -e;
+        if [[ $((0 % $CIRCLE_NODE_TOTAL)) == $CIRCLE_NODE_INDEX ]]; then
+          echo "Fake install dep1" > dep1
+        fi;
+      : parallel: true
+    - ? >-
+        set -e;
+        if [[ $((1 % $CIRCLE_NODE_TOTAL)) == $CIRCLE_NODE_INDEX ]]; then
+          echo "Fake install dep2" > dep2
+        fi;
+      : parallel: true
 
 test:
   override:
     - ls
-    - >-
-      set -e;
-      if [[ -d "$MYCACHE" ]]; then
-        ls "$MYCACHE"
-      fi
-    - /bin/true
 
 deployment:
   lab:
