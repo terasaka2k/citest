@@ -6,6 +6,7 @@ dependencies:
             & { ( echo hi; ) 2>&1 >.echo_hi.log && touch .echo_hi_success; } \
             & { ( echo by; ) 2>&1 >.echo_by.log && touch .echo_by_success; } \
             & wait
+      : parallel: false
 
     - ? >-
         set -e;
