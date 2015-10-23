@@ -5,7 +5,7 @@ dependencies:
         function f() {
           echo aaa
           echo bbb >&2
-        }
+        };
         echo "Installing all dependencies in parallel" \
           & { ( f; ) 2>&1 >.echo_f.log && touch .echo_f_success; } \
           & { ( echo hi; ) 2>&1 >.echo_hi.log && touch .echo_hi_success; } \
