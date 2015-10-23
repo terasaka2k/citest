@@ -20,7 +20,7 @@ dependencies:
         fi;
       : parallel: false
 
-    - ls
+    - ls -a
 
 test:
   override:
@@ -28,7 +28,7 @@ test:
     - cat .echo_by.log
     - cat dep1
     - cat dep2
-    - ls
+    - ls -a
 
 deployment:
   lab:
