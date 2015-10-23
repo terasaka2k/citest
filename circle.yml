@@ -2,10 +2,15 @@ dependencies:
   override:
     - ? >-
         set -e;
-          echo "Installing all dependencies in parallel" \
-            & { ( echo hi; ) 2>&1 >.echo_hi.log && touch .echo_hi_success; } \
-            & { ( echo by; ) 2>&1 >.echo_by.log && touch .echo_by_success; } \
-            & wait
+        function f() {
+          echo aaa
+          echo bbb >&2
+        }
+        echo "Installing all dependencies in parallel" \
+          & { ( f; ) 2>&1 >.echo_f.log && touch .echo_f_success; } \
+          & { ( echo hi; ) 2>&1 >.echo_hi.log && touch .echo_hi_success; } \
+          & { ( echo by; ) 2>&1 >.echo_by.log && touch .echo_by_success; } \
+          & wait
       : parallel: false
 
     - ? >-
@@ -20,15 +25,16 @@ dependencies:
         fi;
       : parallel: false
 
-    - ls -a
+    - ls -1a
 
 test:
   override:
+    - cat .echo_f.log
     - cat .echo_hi.log
     - cat .echo_by.log
     - cat dep1
     - cat dep2
-    - ls -a
+    - ls -1a
 
 deployment:
   lab:
