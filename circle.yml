@@ -2,6 +2,13 @@ dependencies:
   override:
     - ? >-
         set -e;
+          echo "Installing all dependencies in parallel" \
+            & { ( echo hi; ) 2>&1 >.echo_hi.log && touch .echo_hi_success; } \
+            & { ( echo by; ) 2>&1 >.echo_by.log && touch .echo_by_success; } \
+            & wait
+
+    - ? >-
+        set -e;
         if [[ $((0 % $CIRCLE_NODE_TOTAL)) == $CIRCLE_NODE_INDEX ]]; then
           echo $CIRCLE_NODE_INDEX
           echo "Fake install dep1" > dep1
@@ -10,14 +17,17 @@ dependencies:
           echo $CIRCLE_NODE_INDEX
           echo "Fake install dep2" > dep2
         fi;
-      : parallel: true
+      : parallel: false
 
     - ls
 
 test:
   override:
+    - cat .echo_hi.log
+    - cat .echo_by.log
     - cat dep1
     - cat dep2
+    - ls
 
 deployment:
   lab:
